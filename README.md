@@ -6,5 +6,7 @@ Este videojuego fué hecho en una clase de Univalle, la idea es de Alejandra Oca
 
 "Dónde está mi esposo" es un juego de plataformas donde una mujer llamada Ginna se halla en el infierno con más preguntas que respuestas.
 
+puede jugarlo en: https://omwekiatlclass.itch.io/deee
+
 Licencia:
 puede hacer lo que quiera con este juego siempre que de créditos y No sea con propósitos comerciales.
