@@ -1,0 +1,164 @@
+[gd_scene load_steps=10 format=3 uid="uid://yfauy8u6xh6l"]
+
+[ext_resource type="Script" path="res://Scripts/Llorona.gd" id="1_g7obf"]
+[ext_resource type="Texture2D" uid="uid://mm5weqjoff74" path="res://Sprites/Llorona.png" id="3_ei08a"]
+[ext_resource type="AudioStream" uid="uid://ca5hywfo6wbtm" path="res://Sounds/Llorona.wav" id="3_syiva"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bmeu2"]
+radius = 17.0
+height = 88.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_37mu4"]
+radius = 24.0208
+
+[sub_resource type="Animation" id="Animation_uqytb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/Img:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, -57)]
+}
+
+[sub_resource type="Animation" id="Animation_j1kct"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/Img:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, -58), Vector2(2, -58)]
+}
+
+[sub_resource type="Animation" id="Animation_phm4w"]
+resource_name = "run"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/Img:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15, -57), Vector2(15, -57)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbrmn"]
+_data = {
+"RESET": SubResource("Animation_uqytb"),
+"idle": SubResource("Animation_j1kct"),
+"run": SubResource("Animation_phm4w")
+}
+
+[node name="Llorona" type="CharacterBody2D" groups=["Llorona"]]
+collision_layer = 4
+script = ExtResource("1_g7obf")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_bmeu2")
+metadata/_edit_lock_ = true
+
+[node name="RayVistaR" type="RayCast2D" parent="."]
+position = Vector2(12, -23)
+exclude_parent = false
+target_position = Vector2(190, 1)
+collision_mask = 3
+metadata/_edit_lock_ = true
+
+[node name="RayVistaL" type="RayCast2D" parent="."]
+position = Vector2(-13, -23)
+rotation = -3.14159
+exclude_parent = false
+target_position = Vector2(190, 1)
+collision_mask = 3
+metadata/_edit_lock_ = true
+
+[node name="Imagenes" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="Imagenes"]
+position = Vector2(3, -57)
+texture = ExtResource("3_ei08a")
+hframes = 3
+metadata/_edit_lock_ = true
+
+[node name="RayCaida" type="RayCast2D" parent="Imagenes"]
+position = Vector2(26, -16)
+exclude_parent = false
+target_position = Vector2(0, 37)
+
+[node name="Ataque" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="Ataque"]
+position = Vector2(0, -65)
+shape = SubResource("CircleShape2D_37mu4")
+metadata/_edit_lock_ = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hbrmn")
+}
+speed_scale = 2.0
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("3_syiva")
+volume_db = 3.0
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="Ataque" to="." method="_on_ataque_body_entered"]

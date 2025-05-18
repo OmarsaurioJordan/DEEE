@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://dl50y5uuwbsea"]
+
+[ext_resource type="Script" path="res://Scripts/Jefe.gd" id="1_dj7ww"]
+[ext_resource type="Texture2D" uid="uid://qidp65ck031f" path="res://Sprites/Jefe.png" id="3_ai8yk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bmeu2"]
+radius = 46.0
+height = 148.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jx1dt"]
+size = Vector2(60, 66)
+
+[sub_resource type="Animation" id="Animation_uqytb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_phm4w"]
+resource_name = "idle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbrmn"]
+_data = {
+"RESET": SubResource("Animation_uqytb"),
+"idle": SubResource("Animation_phm4w")
+}
+
+[node name="Jefe" type="CharacterBody2D" groups=["Jefe"]]
+collision_layer = 4
+script = ExtResource("1_dj7ww")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+position = Vector2(0, -74)
+shape = SubResource("CapsuleShape2D_bmeu2")
+metadata/_edit_lock_ = true
+
+[node name="Imagenes" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="Imagenes"]
+position = Vector2(10, -109)
+scale = Vector2(2, 2)
+texture = ExtResource("3_ai8yk")
+hframes = 10
+metadata/_edit_lock_ = true
+
+[node name="Area" type="Area2D" parent="Imagenes"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="Imagenes/Area"]
+position = Vector2(92, -39)
+shape = SubResource("RectangleShape2D_jx1dt")
+metadata/_edit_lock_ = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hbrmn")
+}
+speed_scale = 2.0
+
+[connection signal="body_entered" from="Imagenes/Area" to="." method="_on_area_body_entered"]

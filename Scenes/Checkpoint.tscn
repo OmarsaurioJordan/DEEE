@@ -1,0 +1,117 @@
+[gd_scene load_steps=9 format=3 uid="uid://qutmn7360bo8"]
+
+[ext_resource type="Script" path="res://Scripts/Checkpoint.gd" id="1_yy82b"]
+[ext_resource type="Texture2D" uid="uid://cbtvlwd6vb6rk" path="res://Sprites/Curazun.png" id="2_owhdp"]
+[ext_resource type="AudioStream" uid="uid://7eurtp86154g" path="res://Sounds/Checkpoint.wav" id="3_ew524"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ko0yh"]
+radius = 12.0416
+
+[sub_resource type="Animation" id="Animation_yw8ox"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Img:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.75, 0.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Img:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nyxd0"]
+resource_name = "fin"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Img:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1.5, 1.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Img:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_c67ah"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Img:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(0.9, 0.9), Vector2(0.75, 0.75), Vector2(0.6, 0.6), Vector2(0.75, 0.75)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tdbke"]
+_data = {
+"RESET": SubResource("Animation_yw8ox"),
+"fin": SubResource("Animation_nyxd0"),
+"idle": SubResource("Animation_c67ah")
+}
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_yy82b")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ko0yh")
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="."]
+position = Vector2(1, -9)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_owhdp")
+hframes = 3
+metadata/_edit_lock_ = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tdbke")
+}
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("3_ew524")
+volume_db = 6.0
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="Anima" to="." method="_on_anima_animation_finished"]

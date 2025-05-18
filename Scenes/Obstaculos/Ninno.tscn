@@ -1,0 +1,131 @@
+[gd_scene load_steps=9 format=3 uid="uid://c6uvlswuxodi2"]
+
+[ext_resource type="Script" path="res://Scripts/Ninno.gd" id="1_ju52j"]
+[ext_resource type="Texture2D" uid="uid://bbxpodyep7won" path="res://Sprites/Ninno.png" id="3_7qd2u"]
+[ext_resource type="AudioStream" uid="uid://c5e0waawu1xkb" path="res://Sounds/Ninno.wav" id="3_b5lmd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bmeu2"]
+radius = 16.0
+height = 64.0
+
+[sub_resource type="Animation" id="Animation_uqytb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_dq3bg"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 3]
+}
+
+[sub_resource type="Animation" id="Animation_phm4w"]
+resource_name = "run"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbrmn"]
+_data = {
+"RESET": SubResource("Animation_uqytb"),
+"idle": SubResource("Animation_dq3bg"),
+"run": SubResource("Animation_phm4w")
+}
+
+[node name="Ninno" type="CharacterBody2D" groups=["Ninno"]]
+collision_layer = 4
+script = ExtResource("1_ju52j")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_bmeu2")
+metadata/_edit_lock_ = true
+
+[node name="Imagenes" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="Imagenes"]
+position = Vector2(0, 1)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_7qd2u")
+hframes = 4
+metadata/_edit_lock_ = true
+
+[node name="RayFrente" type="RayCast2D" parent="Imagenes"]
+position = Vector2(1, 24)
+exclude_parent = false
+target_position = Vector2(31, 0)
+metadata/_edit_lock_ = true
+
+[node name="RayAtaque" type="RayCast2D" parent="Imagenes"]
+position = Vector2(7, 0)
+exclude_parent = false
+target_position = Vector2(31, 0)
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="RayVista" type="RayCast2D" parent="Imagenes"]
+position = Vector2(7, 18)
+exclude_parent = false
+target_position = Vector2(306, 1)
+collision_mask = 3
+metadata/_edit_lock_ = true
+
+[node name="RayRevista" type="RayCast2D" parent="Imagenes"]
+position = Vector2(-10, 17)
+exclude_parent = false
+target_position = Vector2(-140, 0)
+collision_mask = 3
+metadata/_edit_lock_ = true
+
+[node name="Viraje" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Carrera" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hbrmn")
+}
+speed_scale = 4.5
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("3_b5lmd")
+volume_db = 7.0
+metadata/_edit_lock_ = true
+
+[connection signal="timeout" from="Viraje" to="." method="_on_viraje_timeout"]

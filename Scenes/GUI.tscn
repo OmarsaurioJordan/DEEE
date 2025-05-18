@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=3 uid="uid://camrh0y67jiod"]
+
+[ext_resource type="Texture2D" uid="uid://defxiq85yv2j7" path="res://Sprites/vista_blur.png" id="1_dvsy4"]
+[ext_resource type="FontFile" uid="uid://b5ssb20b4kb7u" path="res://Sprites/comic_sana.ttf" id="1_ipbhf"]
+[ext_resource type="Script" path="res://Scripts/Chat.gd" id="2_1tr7r"]
+[ext_resource type="Texture2D" uid="uid://bqo86u5ecoaqk" path="res://Sprites/GiselaIdle.png" id="2_yc7bc"]
+[ext_resource type="Texture2D" uid="uid://qidp65ck031f" path="res://Sprites/Jefe.png" id="3_4m1pp"]
+[ext_resource type="Texture2D" uid="uid://bj76npkmbaw5l" path="res://Sprites/Corazones.png" id="4_r4ojp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6npb"]
+bg_color = Color(0.952941, 0.976471, 0.980392, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.380392, 0.380392, 0.368627, 1)
+border_blend = true
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="GUI" type="Control" parent="." groups=["GUI"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="Blur" type="Sprite2D" parent="GUI"]
+scale = Vector2(4, 4.8)
+texture = ExtResource("1_dvsy4")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Vidas" type="Sprite2D" parent="GUI"]
+position = Vector2(34, 33)
+texture = ExtResource("4_r4ojp")
+hframes = 3
+metadata/_edit_lock_ = true
+
+[node name="Puntos" type="Label" parent="GUI"]
+layout_mode = 0
+offset_left = 813.0
+offset_top = 6.0
+offset_right = 992.0
+offset_bottom = 80.0
+theme_override_fonts/font = ExtResource("1_ipbhf")
+theme_override_font_sizes/font_size = 22
+text = "0 :Intentos
+0 :Daño"
+horizontal_alignment = 2
+vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="Chat" type="Node2D" parent="GUI"]
+script = ExtResource("2_1tr7r")
+metadata/_edit_lock_ = true
+
+[node name="Texto" type="Label" parent="GUI/Chat"]
+offset_left = 180.0
+offset_top = 572.0
+offset_right = 778.0
+offset_bottom = 708.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ipbhf")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_u6npb")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="Player" type="Sprite2D" parent="GUI/Chat"]
+position = Vector2(90, 641)
+scale = Vector2(3, 3)
+texture = ExtResource("2_yc7bc")
+hframes = 17
+metadata/_edit_lock_ = true
+
+[node name="Jefe" type="Sprite2D" parent="GUI/Chat"]
+position = Vector2(893, 705)
+scale = Vector2(3, 3)
+texture = ExtResource("3_4m1pp")
+flip_h = true
+hframes = 10
+metadata/_edit_lock_ = true
+
+[node name="Pausa" type="Timer" parent="GUI/Chat"]
+wait_time = 0.5
+one_shot = true

@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1oltjtdoes84"]
+
+[ext_resource type="Script" path="res://Scripts/Babosa.gd" id="1_jdmmo"]
+[ext_resource type="Texture2D" uid="uid://bah2dxqd0qspg" path="res://Sprites/Babosa.png" id="2_u3quo"]
+[ext_resource type="AudioStream" uid="uid://bwmne4iflpmm2" path="res://Sounds/Babosa.wav" id="3_m0gmp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bmeu2"]
+radius = 17.0
+height = 78.0
+
+[sub_resource type="Animation" id="Animation_uqytb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_phm4w"]
+resource_name = "run"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/Img:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hbrmn"]
+_data = {
+"RESET": SubResource("Animation_uqytb"),
+"run": SubResource("Animation_phm4w")
+}
+
+[node name="Babosa" type="CharacterBody2D" groups=["Babosa"]]
+collision_layer = 4
+script = ExtResource("1_jdmmo")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bmeu2")
+metadata/_edit_lock_ = true
+
+[node name="Imagenes" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="Imagenes"]
+position = Vector2(21, -6)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_u3quo")
+hframes = 6
+metadata/_edit_lock_ = true
+
+[node name="RayFrente" type="RayCast2D" parent="Imagenes"]
+position = Vector2(1, 24)
+exclude_parent = false
+target_position = Vector2(31, 0)
+metadata/_edit_lock_ = true
+
+[node name="RayCaida" type="RayCast2D" parent="Imagenes"]
+position = Vector2(28, 25)
+exclude_parent = false
+target_position = Vector2(0, 40)
+metadata/_edit_lock_ = true
+
+[node name="RayAtaque" type="RayCast2D" parent="Imagenes"]
+position = Vector2(7, 0)
+exclude_parent = false
+target_position = Vector2(36, 0)
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="Viraje" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hbrmn")
+}
+speed_scale = 5.0
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("3_m0gmp")
+volume_db = 6.0
+metadata/_edit_lock_ = true
+
+[connection signal="timeout" from="Viraje" to="." method="_on_viraje_timeout"]

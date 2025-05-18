@@ -1,0 +1,6 @@
+/.godot
+/WebExport
+*.import
+*.tmp
+*.log
+*.exe

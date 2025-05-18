@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://y6u5hotqo57q"]
+
+[ext_resource type="Script" path="res://Scripts/Feto.gd" id="1_l83xv"]
+[ext_resource type="Texture2D" uid="uid://bej3flvb7hfw1" path="res://Sprites/Feto.png" id="1_xqtkp"]
+[ext_resource type="AudioStream" uid="uid://dfm6kmxbm303j" path="res://Sounds/Feto.wav" id="3_gf33v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lkiqm"]
+radius = 13.1529
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q08tr"]
+
+[node name="Feto" type="CharacterBody2D" groups=["Feto"]]
+collision_layer = 4
+script = ExtResource("1_l83xv")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lkiqm")
+metadata/_edit_lock_ = true
+
+[node name="Img" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("1_xqtkp")
+hframes = 9
+metadata/_edit_lock_ = true
+
+[node name="RayCaer" type="RayCast2D" parent="."]
+position = Vector2(0, 2)
+exclude_parent = false
+target_position = Vector2(0, 442)
+collision_mask = 3
+metadata/_edit_lock_ = true
+
+[node name="Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+metadata/_edit_lock_ = true
+
+[node name="Coli" type="CollisionShape2D" parent="Area"]
+shape = SubResource("CircleShape2D_q08tr")
+metadata/_edit_lock_ = true
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("3_gf33v")
+volume_db = 12.0
+metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]

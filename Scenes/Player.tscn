@@ -1,0 +1,436 @@
+[gd_scene load_steps=19 format=3 uid="uid://d4emuji3wat38"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_6p81u"]
+[ext_resource type="Texture2D" uid="uid://bqo86u5ecoaqk" path="res://Sprites/GiselaIdle.png" id="1_wssqx"]
+[ext_resource type="Texture2D" uid="uid://b0rsv0ffsku4i" path="res://Sprites/GiselaMove.png" id="2_4ypgc"]
+[ext_resource type="AudioStream" uid="uid://cp42qoa0mo2wc" path="res://Sounds/Damage.wav" id="4_ni4k4"]
+[ext_resource type="AudioStream" uid="uid://c54ti0in83shv" path="res://Sounds/Muerte.wav" id="5_jogp5"]
+[ext_resource type="AudioStream" uid="uid://bx4t76blijnry" path="res://Sounds/Inicio.wav" id="6_5tgxk"]
+[ext_resource type="AudioStream" uid="uid://dmcoxpe3pot25" path="res://Sounds/Final.wav" id="7_dxsjd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ovk57"]
+radius = 13.0
+height = 68.0
+
+[sub_resource type="Animation" id="Animation_bcvwq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/GiselaIdle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/GiselaMove:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Imagenes/GiselaIdle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Imagenes/GiselaMove:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Imagenes/GiselaIdle:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Imagenes/GiselaIdle:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3n7bs"]
+resource_name = "dead"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/GiselaIdle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/GiselaIdle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Imagenes/GiselaMove:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Imagenes/GiselaIdle:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.17656, -1.17656]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Imagenes/GiselaIdle:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(28, -3), Vector2(28, -3)]
+}
+
+[sub_resource type="Animation" id="Animation_sedta"]
+resource_name = "idle"
+length = 8.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/GiselaIdle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/GiselaMove:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Imagenes/GiselaIdle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Imagenes/GiselaIdle:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Imagenes/GiselaIdle:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2wvai"]
+resource_name = "run"
+length = 4.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/GiselaMove:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/GiselaMove:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Imagenes/GiselaIdle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+
+[sub_resource type="Animation" id="Animation_o3ygx"]
+resource_name = "salto"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes/GiselaMove:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Imagenes/GiselaMove:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Imagenes/GiselaIdle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_82dnb"]
+_data = {
+"RESET": SubResource("Animation_bcvwq"),
+"dead": SubResource("Animation_3n7bs"),
+"idle": SubResource("Animation_sedta"),
+"run": SubResource("Animation_2wvai"),
+"salto": SubResource("Animation_o3ygx")
+}
+
+[sub_resource type="Animation" id="Animation_txsqw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_1ghek"]
+resource_name = "damage"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.54902, 0.556863, 0.784314), Color(1, 1, 1, 1), Color(1, 0.54902, 0.556863, 0.784314), Color(1, 1, 1, 1), Color(1, 0.54902, 0.556863, 0.784314), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7h4mg"]
+resource_name = "respawn"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Imagenes:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8uda"]
+_data = {
+"RESET": SubResource("Animation_txsqw"),
+"damage": SubResource("Animation_1ghek"),
+"respawn": SubResource("Animation_7h4mg")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+position = Vector2(481, 289)
+collision_layer = 2
+floor_max_angle = 1.0472
+script = ExtResource("1_6p81u")
+
+[node name="Coli" type="CollisionShape2D" parent="."]
+position = Vector2(0, -34)
+shape = SubResource("CapsuleShape2D_ovk57")
+metadata/_edit_lock_ = true
+
+[node name="Imagenes" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="GiselaIdle" type="Sprite2D" parent="Imagenes"]
+texture = ExtResource("1_wssqx")
+offset = Vector2(-2, -48)
+hframes = 17
+metadata/_edit_lock_ = true
+
+[node name="GiselaMove" type="Sprite2D" parent="Imagenes"]
+visible = false
+position = Vector2(0, -48)
+texture = ExtResource("2_4ypgc")
+offset = Vector2(-2, 0)
+hframes = 9
+metadata/_edit_lock_ = true
+
+[node name="Anima" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_82dnb")
+}
+speed_scale = 3.0
+
+[node name="Invisible" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l8uda")
+}
+speed_scale = 2.0
+
+[node name="Camara" type="Camera2D" parent="."]
+zoom = Vector2(1.8, 1.8)
+limit_left = 0
+limit_top = 0
+limit_right = 1000
+limit_bottom = 3000
+position_smoothing_enabled = true
+metadata/_edit_lock_ = true
+
+[node name="Revivir" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="AudioDamage" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("4_ni4k4")
+volume_db = 4.0
+metadata/_edit_lock_ = true
+
+[node name="AudioMuerte" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("5_jogp5")
+volume_db = 4.0
+metadata/_edit_lock_ = true
+
+[node name="AudioInicio" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("6_5tgxk")
+volume_db = 7.0
+metadata/_edit_lock_ = true
+
+[node name="AudioFinal" type="AudioStreamPlayer2D" parent="." groups=["Audio"]]
+stream = ExtResource("7_dxsjd")
+volume_db = 4.0
+metadata/_edit_lock_ = true
+
+[connection signal="animation_finished" from="Invisible" to="." method="_on_invisible_animation_finished"]
