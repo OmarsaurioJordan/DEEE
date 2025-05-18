@@ -1,5 +1,8 @@
 /.godot
 /WebExport
+!/datafiles/*.zip
+*.zip
+*.rar
 *.import
 *.tmp
 *.log
